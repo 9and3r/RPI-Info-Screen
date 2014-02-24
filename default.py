@@ -12,6 +12,9 @@ PluginFolder = "./plugins"
 PluginScript = "screen.py"
 MainModule = "screen"
 pluginScreens = []
+loadAll = False
+pluginsConf = "set_plugins.conf"
+selectedPlugins = []
 
 # Screen size (currently fixed)
 size = width, height = 694, 466
@@ -29,19 +32,30 @@ def usage():
     print "\t-s\tSet size of display e.g. '-s 600,400'"
 
 
+# Try to set the plugins that should be loaded
+def getSelectedPlugins():
+    try:
+    	open(pluginsConf, 'r')
+    	for line in file:
+		selectedPlugins.append(line)
+    except IOError:
+	loadAll = True
+
 # Plugin handling code adapted from: http://lkubuntu.wordpress.com/2012/10/02/writing-a-python-plugin-api/
 # Only selected plugins will be loaded
 def getPlugins():
+    getSelectedPlugins()
     plugins = []
     possibleplugins = os.listdir(PluginFolder)
     a=1
     for i in possibleplugins:
-        location = os.path.join(PluginFolder,i)
-        if not os.path.isdir(location) or not PluginScript in os.listdir(location):
-            continue
-        inf = imp.find_module(MainModule, [location])
-        plugins.append({"name": i, "info": inf, "id": a})
-        a=a+1
+	if(loadAll or i in selectedPlugins):
+        	location = os.path.join(PluginFolder,i)
+        	if not os.path.isdir(location) or not PluginScript in os.listdir(location):
+            		continue
+        	inf = imp.find_module(MainModule, [location])
+        	plugins.append({"name": i, "info": inf, "id": a})
+        	a=a+1
     return plugins
 
 def loadPlugin(plugin):

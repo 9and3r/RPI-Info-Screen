@@ -30,6 +30,7 @@ def usage():
 
 
 # Plugin handling code adapted from: http://lkubuntu.wordpress.com/2012/10/02/writing-a-python-plugin-api/
+# Only selected plugins will be loaded
 def getPlugins():
     plugins = []
     possibleplugins = os.listdir(PluginFolder)

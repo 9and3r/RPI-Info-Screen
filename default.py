@@ -170,6 +170,11 @@ newscreen=False
 newwait=0
 refresh = 60000
 
+# Check if one or more plugin(s) where loaded
+if(len(pluginScreens)==0):
+	print "ERROR: No plugin loaded. Check configuration"
+	quit = True
+
 # Run our main loop
 while not quit:
     for event in pygame.event.get():

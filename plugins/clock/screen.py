@@ -1,6 +1,7 @@
 import os
 from time import strftime
 from displayscreen import PiInfoScreen
+import pygame
 
 class myScreen(PiInfoScreen):
     refreshtime = 1

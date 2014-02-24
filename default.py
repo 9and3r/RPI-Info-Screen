@@ -13,7 +13,7 @@ PluginScript = "screen.py"
 MainModule = "screen"
 pluginScreens = []
 loadAll = False
-pluginsConf = "set_plugins.conf"
+pluginsConf = "plugins.conf"
 selectedPlugins = []
 
 # Screen size (currently fixed)
@@ -35,9 +35,9 @@ def usage():
 # Try to set the plugins that should be loaded
 def getSelectedPlugins():
     try:
-    	open(pluginsConf, 'r')
-    	for line in file:
-		selectedPlugins.append(line)
+    	pluginsConfFile = open(pluginsConf, 'r')
+    	for line in pluginsConfFile:
+		selectedPlugins.append(line.rstrip('\n'))
     except IOError:
 	loadAll = True
 
@@ -162,7 +162,7 @@ pygame.display.flip()
 
 # Set some useful variables for controlling the display
 quit=False
-a=1
+a=0
 b=pygame.time.get_ticks()
 c=-1
 d=0

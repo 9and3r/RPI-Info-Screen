@@ -5,21 +5,6 @@ import os
 import getopt 
 import traceback
 
-###### Code to work with texys screen ######
-from evdev import InputDevice, list_devices
-devices = map(InputDevice, list_devices())
-eventX=""
-for dev in devices:
-    if dev.name == "ADS7846 Touchscreen":
-        eventX = dev.fn
-print eventX
-
-os.environ["SDL_FBDEV"] = "/dev/fb1"
-os.environ["SDL_MOUSEDRV"] = "TSLIB"
-os.environ["SDL_MOUSEDEV"] = eventX
-############################################
-
-
 # Set some variables
 
 # Plugin location and names

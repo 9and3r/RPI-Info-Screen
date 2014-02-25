@@ -17,7 +17,7 @@ pluginsConf = "plugins.conf"
 selectedPlugins = []
 
 # Screen size (currently fixed)
-size = width, height = 694, 466
+size = width, height = 320, 240
 
 # Automatically cycle screens
 automode = False

@@ -22,6 +22,9 @@ size = width, height = 694, 466
 # Automatically cycle screens
 automode = False
 
+# Minimun movement to considere swipe
+minSwipe = 50
+
 # Background about the script
 def usage():
     print "RPi Info Screen by elParaguayo"
@@ -101,6 +104,26 @@ def listPlugins():
         id = str(a)
         print "\t" + id + "\t" + i.showInfo()  
         a = a + 1
+
+# Function to detect swipes
+# It will return 1, -1 for horizontal swipe
+# If the swipe is vertical will return 2, -1
+# Else will return 0
+def getSwipeType():
+	x,y=pygame.mouse.get_rel()
+	if abs(x)<=minSwipe:
+		if abs(y)<=minSwipe:
+			return 0
+		elif y>minSwipe:
+			return 2
+		elif y<-minSwipe:
+			return -2
+	elif abs(y)<=minSwipe:
+		if x>minSwipe:
+			return 1
+		elif x<-minSwipe:
+			return -1
+	return 0
 
 # This is where we start
 
@@ -203,6 +226,25 @@ while not quit:
         if (event.type == pygame.KEYDOWN):
             if (event.key == pygame.K_f):                
                 pygame.display.toggle_fullscreen()
+
+	# Mouse presed
+	if (event.type == pygame.MOUSEBUTTONDOWN):
+		pygame.mouse.get_rel()
+
+	# Mouse released
+	if (event.type == pygame.MOUSEBUTTONUP):
+		swipe = getSwipeType()
+		if (swipe == 1 or swipe == -1):
+			a = a + swipe
+               		if a > len(pluginScreens) - 1: a = 0
+			if a < 0: a = len(pluginScreens) - 1
+		else:
+			try:
+				# Pass to the plugin currently displayed
+				pluginScreens[a].mouseReleased(swipe, pygame.mouse.get_pos())
+			except AttributeError:
+				pass
+			
 
 # only update the screen if it has changed
 #

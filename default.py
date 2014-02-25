@@ -75,7 +75,7 @@ def getScreens():
             # for various screen resolutions
             #
             # TO DO: Work out whether plugin can return more than one screen!
-            a.append(plugin.myScreen(size))
+        	a.append(plugin.myScreen(size))
         
         except Exception, err:
             # If it doesn't work, ignore that plugin and move on

@@ -47,6 +47,8 @@ class myScreen(PiInfoScreen):
 
     def elemTouched(self, elem):
 	if elem=='SHUTDOWN':
-		subprocess.Popen("shutdown now", stdout=subprocess.PIPE, shell=True)
+		p=subprocess.Popen("shutdown now", stdout=subprocess.PIPE,shell=True)
+		output, err = p.communicate()
 	elif elem=='RESET':
-		subprocess.Popen("shutdown -r now", stdout=subprocess.PIPE, shell=True)
+		p=subprocess.Popen("shutdown -r now",stdout=subprocess.PIPE, shell=True)
+		output, err = p.communicate()

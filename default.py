@@ -194,6 +194,10 @@ newwait=0
 refresh = 60000
 refreshNow = False
 
+#Create a clock and set max FPS (This reduces a lot CPU ussage)
+FPS=30
+clock = pygame.time.Clock()
+
 # Check if one or more plugin(s) where loaded
 if(len(pluginScreens)==0):
 	print "ERROR: No plugin loaded. Check configuration"
@@ -289,6 +293,10 @@ while not quit:
         a = a + 1
         if a > len(pluginScreens) - 1: a = 0
         d = pygame.time.get_ticks()
+
+    #Control FPS
+    
+    clock.tick(FPS)
         
         
 

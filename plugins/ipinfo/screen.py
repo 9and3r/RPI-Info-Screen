@@ -9,7 +9,7 @@ class myScreen(PiInfoScreen):
     plugininfo = "Shows the IP address"
     
     def setPluginVariables(self):
-	self.myfont = pygame.font.SysFont("freesans", 50)
+	self.myfont = pygame.font.SysFont("freesans", 30)
         
     def showScreen(self):
 	# Call ifconfig and store in a string
@@ -30,7 +30,6 @@ class myScreen(PiInfoScreen):
 				ipList.update({interface:ip})
 		i=i+1
 			
-	print ipList
 	
         self.surface.fill([14,167,255])
 	y=0

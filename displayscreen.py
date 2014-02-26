@@ -14,7 +14,7 @@ class PiInfoScreen():
     plugininfo = "You should set pluginname and plugininfo in your plugin subclass"
     
     # List of screen sizes supported by the script
-    supportedsizes = [ (694,466) ]
+    supportedsizes = [ (320,240) ]
     
     # Refresh time = how often the data on the screen should be updated (seconds)
     refreshtime = 30

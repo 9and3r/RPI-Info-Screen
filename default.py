@@ -192,6 +192,7 @@ d=0
 newscreen=False
 newwait=0
 refresh = 60000
+refreshNow = False
 
 # Check if one or more plugin(s) where loaded
 if(len(pluginScreens)==0):
@@ -242,6 +243,8 @@ while not quit:
 			try:
 				# Pass to the plugin currently displayed
 				pluginScreens[a].mouseReleased(swipe, pygame.mouse.get_pos())
+				# Force to refresh the displayed plugin
+				refreshNow = True
 			except AttributeError:
 				pass
 			
@@ -276,10 +279,11 @@ while not quit:
         
 
     # refresh current screen
-    if pygame.time.get_ticks() >= (b + refresh):
+    if pygame.time.get_ticks() >= (b + refresh) or refreshNow:
         screen = pluginScreens[a].showScreen()
         pygame.display.flip()
         b = pygame.time.get_ticks()
+	refreshNow = False
         
     if automode and (pygame.time.get_ticks() >= (d + nextscreen)):
         a = a + 1

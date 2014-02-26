@@ -24,7 +24,10 @@ class myScreen(PiInfoScreen):
 			interface = lines[i].split(" ")[0]
 			i=i+1
 			ip = lines[i].split(":")[1].split(" ")[0]
-			ipList.update({interface:ip})
+			if ip.find(".")==-1:
+				ipList.update({interface:"Not connected"})
+			else:
+				ipList.update({interface:ip})
 		i=i+1
 			
 	print ipList

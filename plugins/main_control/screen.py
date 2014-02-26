@@ -1,5 +1,5 @@
 from displayscreen import PiInfoScreen
-import subprocess
+import os
 import random
 
 class myScreen(PiInfoScreen):
@@ -47,8 +47,7 @@ class myScreen(PiInfoScreen):
 
     def elemTouched(self, elem):
 	if elem=='SHUTDOWN':
-		p=subprocess.Popen("shutdown now", stdout=subprocess.PIPE,shell=True)
-		output, err = p.communicate()
+		os.system("sudo shutdown -h now")
 	elif elem=='RESET':
-		p=subprocess.Popen("shutdown -r now",stdout=subprocess.PIPE, shell=True)
-		output, err = p.communicate()
+		os.system("sudo shutdown -r now")
+		

@@ -10,7 +10,7 @@ class myScreen(PiInfoScreen):
     
     def setPluginVariables(self):
 	self.myfont = pygame.font.SysFont("freesans", 30)
-        
+
     def showScreen(self):
 	# Call ifconfig and store in a string
 	ifconfig = subprocess.Popen("ifconfig", stdout=subprocess.PIPE, shell=True)

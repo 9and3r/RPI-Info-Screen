@@ -13,7 +13,7 @@ PluginScript = "screen.py"
 MainModule = "screen"
 pluginScreens = []
 loadAll = False
-pluginsConf = "plugins.conf"
+pluginsConf = "plugins.ini"
 selectedPlugins = []
 
 # Screen size (currently fixed)
@@ -22,8 +22,11 @@ size = width, height = 320, 240
 # Automatically cycle screens
 automode = False
 
-# Minimun movement to considere swipe
+# Mouse related variables
 minSwipe = 50
+maxClick = 15
+longPressTime = 200
+
 
 # Background about the script
 def usage():
@@ -106,24 +109,35 @@ def listPlugins():
         a = a + 1
 
 # Function to detect swipes
-# It will return 1, -1 for horizontal swipe
-# If the swipe is vertical will return 2, -1
-# Else will return 0
+# -1 is that it was not detected as a swipe or click
+# It will return 1 , 2 for horizontal swipe
+# If the swipe is vertical will return 3, 4
+# If it was a click it will return 0
 def getSwipeType():
 	x,y=pygame.mouse.get_rel()
 	if abs(x)<=minSwipe:
 		if abs(y)<=minSwipe:
-			return 0
+			if abs(x) < maxClick and abs(y)< maxClick:
+				return 0
+			else:
+				return -1
 		elif y>minSwipe:
-			return 2
+			return 3
 		elif y<-minSwipe:
-			return -2
+			return 4
 	elif abs(y)<=minSwipe:
 		if x>minSwipe:
 			return 1
 		elif x<-minSwipe:
-			return -1
+			return 2
 	return 0
+
+#Control if there is a longPress
+def longPress(downTime):
+	if pygame.time.get_ticks()-longPressTime>downTime:
+		return True
+	else:
+		return False
 
 # This is where we start
 
@@ -167,7 +181,7 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Info screen")
 
 # Hide mouse
-pygame.mouse.set_visible(False)
+pygame.mouse.set_visible(True)
 
 # Stop keys repeating
 pygame.key.set_repeat()
@@ -193,6 +207,8 @@ newscreen=False
 newwait=0
 refresh = 60000
 refreshNow = False
+mouseDownTime = 0
+mouseDownPos = (0,0)
 
 #Create a clock and set max FPS (This reduces a lot CPU ussage)
 FPS=30
@@ -234,23 +250,25 @@ while not quit:
 
 	# Mouse presed
 	if (event.type == pygame.MOUSEBUTTONDOWN):
+		mouseDownTime = pygame.time.get_ticks()
+		mouseDownPos = pygame.mouse.get_pos()
 		pygame.mouse.get_rel()
 
 	# Mouse released
 	if (event.type == pygame.MOUSEBUTTONUP):
 		swipe = getSwipeType()
-		if (swipe == 1 or swipe == -1):
-			a = a + swipe
-               		if a > len(pluginScreens) - 1: a = 0
-			if a < 0: a = len(pluginScreens) - 1
-		else:
-			try:
-				# Pass to the plugin currently displayed
-				pluginScreens[a].mouseReleased(swipe, pygame.mouse.get_pos())
-				# Force to refresh the displayed plugin
-				refreshNow = True
-			except AttributeError:
-				pass
+		if(swipe != -1):
+			if (swipe == 1):
+				a = a + swipe
+               			if a > len(pluginScreens) - 1: a = 0
+			else:
+				try:
+					# Pass to the plugin currently displayed
+					pluginScreens[a].mouseReleased(swipe, mouseDownPos, pygame.mouse.get_pos(),longPress(mouseDownTime))
+					# Force to refresh the displayed plugin
+					refreshNow = True
+				except AttributeError:
+					pass
 			
 
 # only update the screen if it has changed

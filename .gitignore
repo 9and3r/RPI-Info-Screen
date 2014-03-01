@@ -2,6 +2,8 @@
 *.py[cod]
 *.COPY
 *.ini
+.*~
+*.jpg
 
 # C extensions
 *.so

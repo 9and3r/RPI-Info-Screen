@@ -1,6 +1,7 @@
 from displayscreen import PiInfoScreen
 import os
 import random
+import pygame
 
 class myScreen(PiInfoScreen):
     refreshtime = 30

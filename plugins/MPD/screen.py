@@ -23,10 +23,10 @@ class myScreen(PiInfoScreen):
     
     def setPluginVariables(self):
 	#Load variables
-	fanart_key = self.pluginConfig["Fanart"]["key"]
+	fanart_key = "REPLACE WITH API KEY FROM https://fanart.tv/get-an-api-key/"
 	# Connect to MDP server
 	self.ip = 'localhost'
-	self.port = '6666'
+	self.port = '6600'
 	logging.basicConfig()
 	self.client = mpd.MPDClient()
 	self.connected = False

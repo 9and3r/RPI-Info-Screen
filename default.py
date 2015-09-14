@@ -57,10 +57,12 @@ def getPlugins():
     for i in possibleplugins:
 	if(loadAll or i in selectedPlugins):
         	location = os.path.join(PluginFolder,i)
+		print location
         	if not os.path.isdir(location) or not PluginScript in os.listdir(location):
             		continue
         	inf = imp.find_module(MainModule, [location])
         	plugins.append({"name": i, "info": inf, "id": a})
+		print plugins
         	a=a+1
     return plugins
 
@@ -82,8 +84,7 @@ def getScreens():
         
         except Exception, err:
             # If it doesn't work, ignore that plugin and move on
-            # print traceback.format_exc()
-            continue
+            print traceback.format_exc()
     return a
 
 def screenSize(arg):

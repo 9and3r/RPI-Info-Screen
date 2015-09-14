@@ -1,6 +1,12 @@
 RPI-Info-Screen
 ===============
 
+To use the MPD plugin you need some libraries:
+
+https://github.com/z4r/python-fanart
+https://musicbrainz.org/doc/python-musicbrainz2
+https://github.com/Mic92/python-mpd2
+
 See http://www.raspberrypi.org/phpBB3/viewtopic.php?f=41&amp;t=51807
 
 BETA VERSION - EXPECT ERRORS!
@@ -17,4 +23,5 @@ To Do
 -----
 
 [ ] Use FPS limiting to reduce cycles on Pi
+
 
